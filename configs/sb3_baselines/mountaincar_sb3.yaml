@@ -1,0 +1,26 @@
+env_name: mountaincar
+gym_env_name: MountainCar-v0
+logdir: logs/mountaincar_sb3_more
+reference_logdir: logs/mountaincar_reflective_prompted_policy_optimization
+num_trials: 10
+budget_mode: episodes
+budget_target: 8000
+use_periodic_eval: true
+eval_every_episodes: 1
+eval_episodes: 20
+render_mode: null
+algorithms:
+  - DQN
+  - A2C
+  - PPO
+  - TRPO
+env_kwargs: {}
+algorithm_hyperparams:
+  DQN:
+    n_envs: 1
+  A2C:
+    n_envs: 1
+  PPO:
+    n_envs: 1
+  TRPO:
+    n_envs: 1

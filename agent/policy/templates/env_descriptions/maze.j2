@@ -1,0 +1,8 @@
+The maze environment is a 2D 3x3 grid world (3 rows, 3 columns) where the agent can move up (0), down (1), right (2), left (3) (corresponding to action 0, 1, 2, 3). 
+The state and grids look like this:
+0 1 2
+3 4 5
+6 7 8
+The agent starts at the top-left corner 0 (the left top grid). The goal is to reach the state 8 (the right bottom grid). However, there are some walls in the maze that the agent cannot pass through. You need to explore through it by reading history trajectories.
+The policy is a function that maps the state to the action to take. The policy is represented by an array of 9 numbers. The value of params[i] represents the action to take when the state is i. The value of params[0] means which action to take when the agent is on the top left grid 0. The value of params[1] means which action to take when the agent is on the top second grid 1. So on and so forth.
+Every step, the agent receives -0.01 reward. If the agent reaches the goal state 8, it receives +1 reward. You need to explore through the maze to find the walls.

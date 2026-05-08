@@ -1,0 +1,25 @@
+The swimmers consist of three or more segments (’links’) and one less articulation joints (’rotors’) - one rotor joint connects exactly two links to form a linear chain. The swimmer is suspended in a two-dimensional pool and always starts in the same position (subject to some deviation drawn from a uniform distribution), and the goal is to move as fast as possible towards the right by applying torque to the rotors and using fluid friction.
+The state is a vector of 8 elements, representing the following:
+- state[0] angle of the front tip (-inf to inf rad)
+- state[1] angle of the first rotor (-inf to inf rad)
+- state[2] angle of the second rotor (-inf to inf rad)
+- state[3] velocity of the tip along the x-axis (-inf to inf m/s)
+- state[4] velocity of the tip along the y-axis (-inf to inf m/s)
+- state[5] angular velocity of front tip (-inf to inf rad/s)
+- state[6] angular velocity of first rotor (-inf to inf rad/s)
+- state[7] angular velocity of second rotor (-inf to inf rad/s) 
+The action space is a vector of 2 float numbers, representing the torques applied between the links (-1 to 1 N).
+The policy is a linear policy with 5 parameters and works as follows: 
+action = argmax(state @ W + B), where
+state = [state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7]]
+W = [[params[0], params[1]],
+    [params[2], params[3]],
+    [params[4], params[5]],
+    [params[6], params[7]],
+    [params[8], params[9]],
+    [params[10], params[11]],
+    [params[12], params[13]],
+    [params[14], params[15]]]
+b = [params[16], params[17]]
+The goal is to try to move forward. However, in the meantime, the control cost should also be minimized. The reward function is as follows:
+reward = x-velocity - 1e-4 * action^2.

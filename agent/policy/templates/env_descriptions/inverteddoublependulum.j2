@@ -1,0 +1,35 @@
+This inverted double pendulum environment involves a cart that can be moved linearly, with one pole attached to it and a second pole attached to the other end of the first pole (leaving the second pole as the only one with a free end). The cart can be pushed left or right, and the goal is to balance the second pole on top of the first pole, which is in turn on top of the cart, by applying continuous forces to the cart.
+
+The obverstation space consists of the following parts (in order):
+- state[0]: position of the cart along the linear surface
+- state[1]: sine of the angle between the cart and the first pole
+- state[2]: sine of the angle between the two poles
+- state[3]: cosine of the angle between the cart and the first pole
+- state[4]: cosine of the angle between the two poles
+- state[5]: velocity of the cart
+- state[6]: angular velocity of the angle between the cart and the first pole
+- state[7]: angular velocity of the angle between the two poles
+- state[8]: constraint force - x
+
+The action space is a single float number between -1 and 1, representing the force applied to the cart. The action is a continuous value that can be positive (pushing right) or negative (pushing left).
+
+The policy is a linear policy with 10 parameters and works as follows: 
+action = [state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8]] @ W + B
+where 
+W = [[params[0]],
+     [params[1]],
+     [params[2]],
+     [params[3]],
+     [params[4]],
+     [params[5]],
+     [params[6]],
+     [params[7]],
+     [params[8]],]
+B = [params[9]]
+
+The total reward is: reward = alive_bonus - distance_penalty - velocity_penalty.
+alive_bonus: Every timestep that the Inverted Pendulum is healthy (see definition in section “Episode End”), it gets a reward of fixed value healthy_reward (default is 10).
+distance_penalty: This reward is a measure of how far the tip of the second pendulum (the only free end) moves.
+velocity_penalty: A negative reward to penalize the agent for moving too fast. 
+
+The goal is to keep the second pole balanced on top of the first pole while minimizing the movement of the cart and the poles.

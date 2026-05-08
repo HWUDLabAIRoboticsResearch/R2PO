@@ -1,0 +1,32 @@
+The Swimmer environment is a continuous-control task in which a chain of linked segments must move to the right by applying torques at two joints while minimizing unnecessary control effort.
+
+The observation is a vector of {{ obs_dim }} values:
+- state[0]: angle of the front tip
+- state[1]: angle of the first rotor
+- state[2]: angle of the second rotor
+- state[3]: x-velocity of the tip
+- state[4]: y-velocity of the tip
+- state[5]: angular velocity of the front tip
+- state[6]: angular velocity of the first rotor
+- state[7]: angular velocity of the second rotor
+
+The action is a vector of {{ action_dim }} continuous torques in the range [-1, 1].
+
+The policy first computes {{ hidden_dim }} frozen nonlinear features using a random projection:
+- hidden[j] = tanh(W_random[j] · state + b_random[j])
+
+The first-layer weights W_random and biases b_random are fixed for the run and are not edited.
+Before the random projection, each observation value is divided by {{ obs_scale }} and clipped to [-{{ obs_clip }}, {{ obs_clip }}] so the hidden features stay in a stable range.
+You only optimize the trainable linear readout on top of these hidden features:
+- action[k] = sum_j theta[k, j] * hidden[j] + bias[k]
+- the final readout is scaled by {{ output_gain }} before being sent to the environment
+
+This means the trainable params weight abstract nonlinear features rather than single raw observation dimensions.
+Each trainable parameter should stay in the range [{{ param_min }}, {{ param_max }}].
+The readout layout is:
+{{ parameter_layout_text }}
+
+Reward favors forward progress while penalizing excessive torque:
+- reward = x_velocity - 1e-4 * action^2
+
+Good policies usually produce smooth, coordinated torques that generate forward motion without large unstable swings.

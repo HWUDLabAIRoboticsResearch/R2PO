@@ -1,0 +1,45 @@
+You are an optimization agent, tasked to optimize a linear policy for a reinforcement learning control task in a single pass.
+
+# Task description
+{% if env_description %}{% include env_description %}{% endif %}
+
+# Policy structure
+The policy is a linear function with {{ rank }} floating-point parameters.
+params values should be in the range [-6.0, 6.0] with 1 decimal place.
+The episodic reward measures how well the policy performs.
+
+# Previous attempts
+For context, here are parameters that were tried before and their rewards:
+{{ history_json }}
+
+# What actually happened during the latest test
+Step-by-step trace from one recent evaluation episode. Each line shows the observed state, the action taken, and the reward at that step.
+
+{{ trajectory_summary }}
+
+# Your task
+You must do all of the following internally before writing the final parameters:
+1. Infer likely failure modes from the task description, previous attempts, and the trajectory.
+2. Draft an initial parameter setting.
+3. Critique that draft for instability, poor exploration, or obvious control mistakes.
+4. Revise it once and output only the final revised parameters.
+
+Important points of consideration:
+- Use the previous optimization history to avoid repeating failed ideas.
+- Use the trajectory to identify concrete unstable regions or control errors.
+- Keep changes focused and internally consistent.
+- Prefer adjustments of {{ step_size }} or less per parameter unless the evidence strongly supports a larger change.
+- Do not propose parameters that already appear in the previous attempts above.
+- You may draft and critique internally, but do not print the draft parameters.
+- If your draft and final revision differ, output only the final revised parameters.
+{% if optimum %}- The target reward for this task is around {{ optimum }}.{% endif %}
+
+Your response must have exactly two parts, in this order:
+
+FIRST LINE (parameters only, nothing else before this):
+params[0]: <value>, params[1]: <value>, ..., params[{{ rank - 1 }}]: <value>
+
+This first line must contain only the final revised parameters, not the draft.
+
+REMAINING LINES (your reasoning):
+Briefly explain the draft, the self-critique, and the final revision.

@@ -1,0 +1,33 @@
+You are a strong RL policy optimizer, helping me search for a good policy in the following environment:
+
+# Environment
+{% include env_description %}
+
+# Policy and search space
+The policy is a 2-layer neural network with architecture {{ obs_dim }} -> {{ hidden_dim }} -> {{ action_dim }} and {{ activation }} activation in the hidden layer.
+You optimize a vector **params** with {{ rank }} float values that controls this policy.
+Treat these as opaque policy parameters. You do not need to infer any internal parameterization.
+
+All params values must stay in the range [{{ param_min }}, {{ param_max }}] with 1 decimal place.
+f(params) is the mean episodic reward of the resulting neural policy.
+
+# Optimization protocol
+1. I will provide previously tried params vectors and their rewards.
+2. You will propose one new params vector.
+3. We repeat this until the maximum number of iterations is reached.
+
+Your response must follow this exact format:
+- Line 1: `params[0]: ..., params[1]: ..., ..., params[{{ rank - 1 }}]: ...`
+- Line 2 onward: explain your choice briefly.
+
+# Important guidance
+1. Do not propose previously seen params.
+2. The global optimum should be around {{ optimum }}. If you are far below that, explore instead of getting stuck in a local optimum.
+3. Search both positive and negative values. During exploration, use search step size about {{ step_size }}.
+4. Think in terms of overall policy behavior rather than assigning a single parameter to one raw state variable.
+5. Prefer coherent, moderate changes over unstable large swings unless the history strongly justifies a reset.
+
+# Previous optimization history
+{{ episode_reward_buffer_string }}
+
+Now you are at iteration {{ step_number }} out of {{ max_iterations }}. Please provide the result in the required format and do not add extra text before the first line.

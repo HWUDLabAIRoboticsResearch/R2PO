@@ -1,0 +1,6 @@
+The mountain car continuous environment is a 2D world where the agent (car) is in a U shaped valley, and a torque can be applied to the car (left is negative and right is positive). 
+The state is a vector of 2 elements, representing position (-1.2 to 0.6) and velocity (-0.07 to 0.07) respectively. Negative position means left and positive means right, while negative velocity means the car is moving left and positive means the car is moving right.
+The goal is to reach the flag at the far right top of the hill.
+The policy is a linear policy with 3 parameters and works as follows: 
+action = position * params[0] + velocity * params[1] + params[2], where action is the torque to be applied to the car. Negative action means a torque to the left and positive action means a torque to the right.
+The reward is 100 if the cart reaches goal. A negative reward is given for applying the torque: -0.1 * action^2. The goal is to reach the flag at the right top side of the hill. 

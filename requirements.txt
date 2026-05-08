@@ -1,0 +1,11 @@
+gymnasium[mujoco]
+numpy
+matplotlib
+pyyaml
+jinja2
+python-dotenv
+openai
+anthropic 
+google-generativeai
+stable-baselines3
+sb3-contrib

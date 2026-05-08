@@ -1,0 +1,20 @@
+task: dist_state_actor_second_pass
+num_episodes: 100
+gym_env_name: FrozenLake-v1
+render_mode: null
+logdir: logs/frozenlake_actor_second_pass
+dim_actions: [[0, 1, 2, 3]]
+dim_states: [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]]
+max_traj_count: 1000
+max_traj_length: 100
+template_dir: agent/policy/templates
+llm_si_template_name: num_optim_candidates.j2
+llm_output_conversion_template_name: num_optim_candidates.j2
+llm_model_name: ollama/gpt-oss:20b-cloud
+num_evaluation_episodes: 20
+warmup_episodes: 20
+warmup_dir: null
+optimum: 1.0
+env_kwargs:
+  is_slippery: true
+traj_history_last_n: 100

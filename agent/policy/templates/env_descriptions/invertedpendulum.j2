@@ -1,0 +1,13 @@
+The Inverted Pendulum environment consists of a cart that can be moved linearly, with a pole attached to one end and having another end free. The cart can be pushed left or right, and the goal is to balance the pole on top of the cart by applying forces to the cart.
+The state is a vector of 4 elements, representing the cart position (-inf to inf m), pole angle (-inf to inf rad), cart velocity (-inf to inf m/s), and pole angular velocity (-inf to inf rad/s) respectively. The goal is to keep the pole upright and the cart within the bounding position of [-0.2, 0.2].
+The action space is 1 single float, representing the force to be applied on the cart (-3 to 3 N).
+The policy is a linear policy with 5 parameters and works as follows: 
+raw_action = state @ W + b, where
+state = [cart_position, pole_angle, cart_velocity, pole_angular_velocity]
+W = [[params[0]],
+    [params[1]],
+    [params[2]],
+    [params[3]]]
+b = [params[4]]
+The executed action is this single scalar force, clipped to the environment action range if needed.
+The reward is +1 for every time step the pole is upright. The episode ends when the pole falls over (the pole angle is larger than 0.2 radians or smaller than -0.2 radians).

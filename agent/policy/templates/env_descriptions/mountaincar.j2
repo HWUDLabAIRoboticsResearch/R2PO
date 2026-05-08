@@ -1,0 +1,8 @@
+The mountain car environment is a 2D world where the agent (car) is in a U shaped valley, and can accelerate to the left, do no acceleration, or accelerate to the right (corresponding to action 0, 1, 2). The state is a vector of 2 elements, representing position (-1.2 to 0.6) and velocity (-0.07 to 0.07) respectively. Negative means left and positive means right for both position and velocity. The goal is to reach the flag at the far right side of the hill. 
+The policy is a linear policy with 9 parameters and works as follows: 
+action = argmax([state[0], state[1]] dot W + B)
+where 
+W = [[params[0], params[1]], [params[2]]
+     [params[3]], [params[4], params[5]]]
+B = [params[6], params[7], params[8]]
+The reward is -1 for each step. The goal is to reach the flag at the far right side of the hill. The agent should pick actions that will help it reach far right side as fast as possible.

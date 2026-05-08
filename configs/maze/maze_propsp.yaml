@@ -1,0 +1,18 @@
+task: dist_state_llm_num_optim_semantics
+num_episodes: 200
+gym_env_name: maze-sample-3x3-v0
+render_mode: false
+logdir: logs/maze_propsp
+dim_actions: [[0, 1, 2, 3]]
+dim_states: [[0, 1, 2, 3, 4, 5, 6, 7, 8]]
+max_traj_count: 1000
+max_traj_length: 20
+template_dir: agent/policy/templates
+llm_si_template_name: num_optim_candidates_semantics.j2
+llm_output_conversion_template_name: num_optim_candidates_semantics.j2
+llm_model_name: ollama/gpt-oss:20b-cloud
+num_evaluation_episodes: 20
+warmup_episodes: 20
+warmup_dir: null
+optimum: 0.9
+env_desc_file: env_descriptions/maze.j2

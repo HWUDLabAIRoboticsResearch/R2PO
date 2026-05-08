@@ -1,0 +1,14 @@
+The pong environment is a 2D plane where the agent (robot) is a paddle on the left side (negative x side) and can move vertically freely (along y axis), and there is a ball moving in the plain. The goal of this environment is to always trying to hit the ball back. 
+The state space consists of 5 dimensions: The paddle's y (state[0]); The ball's x (state[1]); The ball's y (state[2]); The ball's velocity on x (state[3]); The ball's velocity on y (state[4]). 
+The action space consists of 3 actions (0: paddle move up, 1: paddle move down, 2: do nothing). 
+Everytime the paddle hits the ball, the agent receives a reward of +1. If the paddle misses the ball, the game is over.
+The policy is a linear policy with 18 parameters and works as follows: 
+action = argmax(state @ W + B), where
+state = [state[0], state[1], state[2], state[3], state[4]]
+W = [[params[0], params[1]], [params[2]]
+     [params[3]], [params[4], params[5]]
+     [params[6]], [params[7], params[8]]
+     [params[9]], [params[10], params[11]]
+     [params[12]], [params[13], params[14]]
+     ]
+B = [params[15], params[16], params[17]]

@@ -1,0 +1,12 @@
+The cartpole environment is a 2D world where a pole is attached by an un-actuated joint to a cart, which moves along a frictionless track. The pendulum is placed upright on the cart and the goal is to balance the pole by applying forces in the left and right direction on the cart.
+The state is a vector of 4 elements, representing the cart position (-4.8 to 4.8), cart velocity (-inf to inf), pole angle (-0.418 to 0.418 rad), and ple angular velocity (-inf to inf) respectively. The goal is to keep the pole upright and the cart within the bounding position of [-2.4, 2.4].
+The action space consists of 2 actions (0: push left, 1: push right).
+The policy is a linear policy with 18 parameters and works as follows: 
+action = argmax(state @ W + B), where
+state = [cart_position, cart_velocity, pole_angle, pole_angular_velocity]
+W = [[params[0], params[1]],
+    [params[2], params[3]],
+    [params[4], params[5]],
+    [params[6], params[7]]]
+B = [params[8], params[9]]
+The reward is +1 for every time step the pole is upright and the cart is within the bounding position. The episode ends when the pole falls over or the cart goes out of bounds.

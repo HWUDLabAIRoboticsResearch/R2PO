@@ -1,0 +1,38 @@
+% R2PO vs all core baselines (Mean Best Reward)
+% Holm correction applied separately within each baseline family across the 10 environments.
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Environment & Baseline & Base mean & R2PO mean & Gap & Welch $t$ & Raw $p$ & Holm $p$ \\
+\midrule
+Nim & ProPS & 0.75 & \cellcolor{bestcolor}\textbf{1.00} & 0.25 & 2.643 & 0.0268 & 0.1338 \\
+Nim & ProPS+ & \cellcolor{bestcolor}\textbf{1.00} & \cellcolor{bestcolor}\textbf{1.00} & 0.00 & 0.000 & 1.0000 & 1.0000 \\
+Nim & SB3 (A2C) & 0.88 & \cellcolor{bestcolor}\textbf{1.00} & 0.12 & 1.406 & 0.1934 & 0.5803 \\
+Pong & ProPS & 2.15 & \cellcolor{bestcolor}\textbf{3.00} & 0.85 & 2.833 & 0.0196 & 0.1177 \\
+Pong & ProPS+ & 2.78 & \cellcolor{bestcolor}\textbf{3.00} & 0.22 & 1.687 & 0.1259 & 0.8815 \\
+Pong & SB3 (PPO) & 2.33 & \cellcolor{bestcolor}\textbf{3.00} & 0.67 & 2.681 & 0.0251 & 0.1257 \\
+Swimmer & ProPS & 208.52 & \cellcolor{bestcolor}\textbf{294.57} & 86.05 & 3.351 & 0.0043 & 0.0299 \\
+Swimmer & ProPS+ & 274.86 & \cellcolor{bestcolor}\textbf{294.57} & 19.71 & 1.065 & 0.3011 & 1.0000 \\
+Swimmer & SB3 (TRPO) & 67.89 & \cellcolor{bestcolor}\textbf{294.57} & 226.68 & 14.771 & 1.8e-09 & 1.1e-08 \\
+MountainCarCon & ProPS & 75.37 & \cellcolor{bestcolor}\textbf{98.75} & 23.38 & 2.418 & 0.0387 & 0.1338 \\
+MountainCarCon & ProPS+ & 98.70 & \cellcolor{bestcolor}\textbf{98.75} & 0.05 & 0.237 & 0.8155 & 1.0000 \\
+MountainCarCon & SB3 (SAC) & 94.81 & \cellcolor{bestcolor}\textbf{98.75} & 3.94 & 20.521 & 6.6e-14 & 5.2e-13 \\
+MountainCar & ProPS & -191.84 & \cellcolor{bestcolor}\textbf{-111.04} & 80.80 & 9.790 & 3.1e-06 & 2.7e-05 \\
+MountainCar & ProPS+ & -150.21 & \cellcolor{bestcolor}\textbf{-111.04} & 39.17 & 4.603 & 0.0011 & 0.0115 \\
+MountainCar & SB3 (DQN) & -197.47 & \cellcolor{bestcolor}\textbf{-111.04} & 86.44 & 50.957 & 7.6e-21 & 6.9e-20 \\
+InvDblPend & ProPS & 112.18 & \cellcolor{bestcolor}\textbf{254.04} & 141.86 & 1.923 & 0.0862 & 0.1724 \\
+InvDblPend & ProPS+ & 128.81 & \cellcolor{bestcolor}\textbf{254.04} & 125.23 & 1.659 & 0.1281 & 0.8815 \\
+InvDblPend & SB3 (TRPO) & 98.25 & \cellcolor{bestcolor}\textbf{254.04} & 155.79 & 2.120 & 0.0630 & 0.2522 \\
+InvPendulum & ProPS & 649.91 & \cellcolor{bestcolor}\textbf{1000.00} & 350.09 & 2.562 & 0.0306 & 0.1338 \\
+InvPendulum & ProPS+ & 657.88 & \cellcolor{bestcolor}\textbf{1000.00} & 342.12 & 2.434 & 0.0377 & 0.3394 \\
+InvPendulum & SB3 (TRPO) & 28.49 & \cellcolor{bestcolor}\textbf{1000.00} & 971.50 & 4298.503 & 1.0e-29 & 1.0e-28 \\
+FrozenLake & ProPS & 0.24 & \cellcolor{bestcolor}\textbf{0.93} & 0.69 & 14.707 & 1.2e-08 & 1.2e-07 \\
+FrozenLake & ProPS+ & 0.90 & \cellcolor{bestcolor}\textbf{0.93} & 0.02 & 1.037 & 0.3146 & 1.0000 \\
+FrozenLake & SB3 (TRPO) & 0.12 & \cellcolor{bestcolor}\textbf{0.93} & 0.81 & 19.572 & 2.2e-10 & 1.5e-09 \\
+CartPole & ProPS & 427.74 & \cellcolor{bestcolor}\textbf{500.00} & 72.26 & 1.598 & 0.1446 & 0.1724 \\
+CartPole & ProPS+ & 396.21 & \cellcolor{bestcolor}\textbf{500.00} & 103.79 & 2.115 & 0.0636 & 0.5086 \\
+CartPole & SB3 (TRPO) & 490.76 & \cellcolor{bestcolor}\textbf{500.00} & 9.24 & 1.000 & 0.3434 & 0.6869 \\
+Maze & ProPS & -0.70 & \cellcolor{bestcolor}\textbf{0.97} & 1.66 & 6.000 & 0.0002 & 0.0016 \\
+Maze & ProPS+ & \cellcolor{bestcolor}\textbf{0.97} & \cellcolor{bestcolor}\textbf{0.97} & 0.00 & 0.000 & 1.0000 & 1.0000 \\
+Maze & SB3 (A2C) & \cellcolor{bestcolor}\textbf{0.97} & \cellcolor{bestcolor}\textbf{0.97} & 0.00 & 0.000 & 1.0000 & 1.0000 \\
+\bottomrule
+\end{tabular}

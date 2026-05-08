@@ -1,0 +1,54 @@
+{
+  "episodes": 2000,
+  "mention_mode": "word",
+  "regressions": 627,
+  "old_reward_proxy": {
+    "count": 502,
+    "pct_of_regressions": 80.06379585326954,
+    "definition": "delta < 0, worst < best, and worst <= median"
+  },
+  "strict_reward_proxy": {
+    "count": 339,
+    "pct_of_regressions": 54.066985645933016,
+    "definition": "delta < 0, worst < median"
+  },
+  "old_with_worst_reference": {
+    "count": 494,
+    "pct_of_regressions": 78.78787878787878,
+    "definition": "old reward proxy plus Critic-LLM explicitly references the worst rollout/trajectory"
+  },
+  "strict_with_worst_reference": {
+    "count": 334,
+    "pct_of_regressions": 53.269537480063796,
+    "definition": "strict reward proxy plus Critic-LLM explicitly references the worst rollout/trajectory"
+  },
+  "excluded_by_strict_change": {
+    "count": 163,
+    "pct_of_old_reward_proxy": 32.47011952191235,
+    "definition": "old proxy cases where worst = median < best"
+  },
+  "per_env": {
+    "cartpole": {
+      "regressions": 304,
+      "old_reward_proxy_count": 237,
+      "old_reward_proxy_pct": 77.96052631578948,
+      "strict_reward_proxy_count": 237,
+      "strict_reward_proxy_pct": 77.96052631578948,
+      "old_with_worst_reference_count": 233,
+      "old_with_worst_reference_pct": 76.64473684210526,
+      "strict_with_worst_reference_count": 233,
+      "strict_with_worst_reference_pct": 76.64473684210526
+    },
+    "pong": {
+      "regressions": 323,
+      "old_reward_proxy_count": 265,
+      "old_reward_proxy_pct": 82.04334365325077,
+      "strict_reward_proxy_count": 102,
+      "strict_reward_proxy_pct": 31.57894736842105,
+      "old_with_worst_reference_count": 261,
+      "old_with_worst_reference_pct": 80.80495356037152,
+      "strict_with_worst_reference_count": 101,
+      "strict_with_worst_reference_pct": 31.269349845201237
+    }
+  }
+}

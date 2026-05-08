@@ -1,0 +1,6 @@
+The environment is the nim game.
+The nim game starts with 10 sticks. In each turn, the agent can remove 1, 2, or 3 sticks. The agent and the environment take turns to remove sticks. The agent wins if the environment removes the last stick, and the environment wins if the agent removes the last stick. 
+The state is how many sticks are left. State is between 0 and 11. state 0 means no sticks left; state 1 means 1 stick left; ...; state 10 means 10 sticks left. 
+The action is how many sticks to remove by the agent (Action 1 means removing 1 stick; Action 2 means removing 2 sticks; Action 3 means removing 3 sticks). 
+The reward is 1 if the agent wins, and -1 if the environment wins.
+The policy is a function that maps the state to the action to take. The policy is represented by an array of 11 numbers. The value of params[i] represents the action to take when the state is i. The value of params[10] means how many sticks to remove when there are 10 sticks left. The value of params[9] means how many sticks to remove when there are 9 sticks left. So on and so forth.
