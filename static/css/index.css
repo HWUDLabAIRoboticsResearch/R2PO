@@ -133,8 +133,7 @@ body {
 
 .results-carousel .item img {
   width: 100%;
-  height: 280px;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 
