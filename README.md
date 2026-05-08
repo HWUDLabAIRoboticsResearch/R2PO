@@ -1,8 +1,6 @@
 # R2PO
 
-<p align="center">
-  <img src="images/r2po_overview.png" alt="R2PO overview">
-</p>
+![R2PO overview](images/r2po_overview.png)
 
 Code for running Reflective Prompted Policy Optimization (R2PO), baseline policy-search experiments, SB3 baselines, and analysis scripts.
 
