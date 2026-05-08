@@ -5,11 +5,11 @@
 ![Python 3.11](https://img.shields.io/badge/python-3.11-blue)
 ![Python 3.12](https://img.shields.io/badge/python-3.12-blue)
 
-[Project website](https://hwudlabairoboticsresearch.github.io/R2PO/)
-
 ![R2PO overview](images/r2po_overview.png)
 
 Code for running Reflective Prompted Policy Optimization (R2PO), baseline policy-search experiments, SB3 baselines, and analysis scripts.
+
+[Project website](https://hwudlabairoboticsresearch.github.io/R2PO/)
 
 ## Paper
 
