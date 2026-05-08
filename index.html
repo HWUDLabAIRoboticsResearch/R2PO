@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="description"
         content="R2PO: Reflective Prompted Policy Optimization — a two-stage LLM framework for policy search that augments scalar reward feedback with trajectory-level behavioral evidence.">
-  <meta name="keywords" content="R2PO, Reinforcement Learning, LLM, Policy Optimization, Trajectory, NeurIPS">
+  <meta name="keywords" content="R2PO, Reinforcement Learning, LLM, Policy Optimization, Trajectory">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>R2PO: Reflective Prompted Policy Optimization</title>
 
@@ -27,32 +27,30 @@
 </head>
 <body>
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://hw.ac.uk">
-        <span class="icon">
-          <i class="fas fa-home"></i>
-        </span>
-      </a>
-    </div>
-  </div>
-</nav>
+<button id="dark-mode-toggle" title="Toggle dark mode" onclick="toggleDark()">
+  <i class="fas fa-moon"></i>
+  <i class="fas fa-sun"></i>
+</button>
+<script>
+  (function() {
+    if (localStorage.getItem('r2po-dark') === '1') {
+      document.body.classList.add('dark-mode');
+    }
+  })();
+  function toggleDark() {
+    var on = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('r2po-dark', on ? '1' : '0');
+  }
+</script>
 
 
 <section class="hero">
-  <div class="hero-body">
+  <div class="hero-body" style="padding-top: 3rem; padding-bottom: 11px;">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Reflective Prompted Policy Optimization: Trajectory-Grounded Revision and Salience Bias</h1>
+        <div class="column has-text-centered" style="padding-bottom: 0%;">
+          <h1 class="title is-1 publication-title" style="margin-bottom: 0.1em;">R2PO</h1>
+          <h1 class="title is-3 sub-title">Reflective Prompted Policy Optimization: Trajectory-Grounded Revision and Salience Bias</h1>
 
           <div class="is-size-5 publication-authors">
             <span class="author-block">Rahaf Abu Hara<sup>1</sup>,</span>
@@ -60,12 +58,12 @@
             <span class="author-block">Claudio Zito<sup>3</sup></span>
           </div>
 
-          <div class="is-size-5 publication-authors" style="margin-top: 0.5rem;">
+          <div class="is-size-5 publication-unis" style="margin-top: 0.5rem;">
             <span class="author-block"><sup>1, 2, 3</sup>Laboratory of AI and Robotics Research (LAIRR)</span><br>
             <span class="author-block">Heriot-Watt University Dubai</span>
           </div>
 
-          <div class="is-size-6 publication-authors" style="margin-top: 0.4rem; color: #555;">
+          <div class="is-size-6 publication-unis" style="margin-top: 0.4rem;">
             <span class="author-block">rha4001@hw.ac.uk,</span>
             <span class="author-block">vm81@hw.ac.uk,</span>
             <span class="author-block">C.Zito@hw.ac.uk</span>
@@ -94,9 +92,6 @@
             </div>
           </div>
 
-          <div class="is-size-6" style="color: #888;">
-            Submitted to the 40th Conference on Neural Information Processing Systems (NeurIPS 2026)
-          </div>
         </div>
       </div>
     </div>
@@ -507,17 +502,6 @@
 </section>
 
 
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@article{abuhara2026r2po,
-  author    = {Abu Hara, Rahaf and Murarri, Vaibbhav and Zito, Claudio},
-  title     = {Reflective Prompted Policy Optimization: Trajectory-Grounded Revision and Salience Bias},
-  journal   = {NeurIPS},
-  year      = {2026},
-}</code></pre>
-  </div>
-</section>
 
 
 <footer class="footer">
