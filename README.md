@@ -32,8 +32,6 @@ We recommend Python 3.12 with `uv`. Python 3.10+ should also work, but the relea
 uv venv --python 3.12
 uv pip install -r requirements.txt
 uv pip install -e envs/gym-maze-master
-uv pip install "gymnasium[mujoco]"
-uv pip install "stable-baselines3[extra]" sb3-contrib
 ```
 
 If you prefer Conda for Python management, create the environment with Conda and still use `uv` for package installation:
@@ -43,7 +41,6 @@ conda create -n r2po python=3.12
 conda activate r2po
 uv pip install -r requirements.txt
 uv pip install -e envs/gym-maze-master
-uv pip install "gymnasium[mujoco]" "stable-baselines3[extra]" sb3-contrib
 ```
 
 ## API Key Setup

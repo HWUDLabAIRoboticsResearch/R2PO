@@ -5,7 +5,7 @@ pyyaml
 jinja2
 python-dotenv
 openai
-anthropic 
+anthropic
 google-generativeai
-stable-baselines3
-sb3-contrib
+stable-baselines3[extra]>=2.4.0,<3.0
+sb3-contrib>=2.4.0,<3.0
