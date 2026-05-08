@@ -1,10 +1,28 @@
 # R2PO
 
+![R2PO overview](images/arch.png)
+
 Code for running Reflective Prompted Policy Optimization (R2PO), baseline policy-search experiments, SB3 baselines, and analysis scripts.
 
 ## Paper
 
-Paper link: coming soon.
+Reflective Prompted Policy Optimization: Trajectory-Grounded Revision and Salience Bias. Paper link coming soon.
+
+## Contributions
+
+- A two-stage LLM policy optimizer that separates global parameter search from local rollout-grounded revision.
+- A trajectory-evidence design that summarizes policy behavior with aggregate rollout statistics, a median trajectory, and a conservative revision rule.
+- An analysis of salience bias, a failure mode where trajectory-grounded revision overreacts to vivid but unrepresentative failures.
+- Matched-budget ablations that isolate the roles of trajectory evidence, two-stage reasoning, and keep-best selection.
+
+## Key Results
+
+- Using `gpt-oss:20b-cloud`, R2PO achieves the highest mean reward on 9 of 10 environments; on MountainCarContinuous it is statistically tied with SAC.
+- R2PO matches or exceeds all baselines on mean best reward across all 10 environments, reaching maximum return on CartPole, InvertedPendulum, Pong, and Nim.
+- Compared with ProPS+, R2PO performs better on all 10 environments and reaches strong policies earlier, including near-optimal CartPole performance within about 500 episodes.
+- Ablations show that the gains do not come from extra LLM calls or richer prompts alone; they require trajectory-grounded revision, two-stage design, and keep-best selection.
+- The salience-bias analysis explains 76.6% of ThreeTraj regressions on CartPole; R2PO mitigates this with aggregate statistics, median-trajectory selection, and the revision rule.
+
 
 ## Installation
 
@@ -12,7 +30,6 @@ We recommend Python 3.12 with `uv`. Python 3.10+ should also work, but the relea
 
 ```bash
 uv venv --python 3.12
-source .venv/bin/activate
 uv pip install -r requirements.txt
 uv pip install -e envs/gym-maze-master
 uv pip install "gymnasium[mujoco]"
@@ -129,17 +146,9 @@ uv run python paper_reward_curves.py --preset core --output paper_results/core_r
 uv run python paper_significance_tests.py --comparison-mode all --metric best_reward
 ```
 
-Additional scripts for ablations and edit-pattern analysis are in the repository root:
+## Config Names
 
-- `paper_results_tables.py`
-- `paper_reward_curves.py`
-- `paper_significance_tests.py`
-- `tau_c_sensitivity_results.py`
-- `analyze_three_traj_reward_groups.py`
-- `analyze_salience_regressions.py`
-- `paper_reptraj_edit_tables.py`
-
-The main method configs use the paper-facing names:
+Experiment configs are grouped by environment under `configs/`. Common suffixes:
 
 - `*_props.yaml`: ProPS
 - `*_propsp.yaml`: ProPS+
@@ -151,15 +160,6 @@ The main method configs use the paper-facing names:
 - `*_three_traj.yaml`: ThreeTraj
 - `*_reflective_prompted_policy_optimization.yaml`: R2PO
 
-## Output Files
+## Citation
 
-Analysis outputs are written under `paper_results/` by default. Common generated files include:
-
-- `paper_results/core_mean_reward.*`
-- `paper_results/core_mean_best_reward.*`
-- `paper_results/variants_mean_reward.*`
-- `paper_results/variants_mean_best_reward.*`
-- `paper_results/core_significance_mean_reward_all.tex`
-- `paper_results/core_significance_best_reward_all.tex`
-- `paper_results/tau_c_sensitivity_table.tex`
-- `paper_results/edit_pattern_tables/`
+Citation coming soon.
