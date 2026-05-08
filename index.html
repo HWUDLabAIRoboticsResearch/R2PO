@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="R2PO: Reflective Prompted Policy Optimization — a two-stage LLM framework for policy search that augments scalar reward feedback with trajectory-level behavioral evidence.">
+  <meta name="keywords" content="R2PO, Reinforcement Learning, LLM, Policy Optimization, Trajectory, NeurIPS">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>R2PO: Reflective Prompted Policy Optimization</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://hw.ac.uk">
+        <span class="icon">
+          <i class="fas fa-home"></i>
+        </span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Reflective Prompted Policy Optimization: Trajectory-Grounded Revision and Salience Bias</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Rahaf Abu Hara<sup>1</sup>,</span>
+            <span class="author-block">Vaibbhav Murarri<sup>2</sup>,</span>
+            <span class="author-block">Claudio Zito<sup>3</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors" style="margin-top: 0.5rem;">
+            <span class="author-block"><sup>1, 2, 3</sup>Laboratory of AI and Robotics Research (LAIRR)</span><br>
+            <span class="author-block">Heriot-Watt University Dubai</span>
+          </div>
+
+          <div class="is-size-6 publication-authors" style="margin-top: 0.4rem; color: #555;">
+            <span class="author-block">rha4001@hw.ac.uk,</span>
+            <span class="author-block">vm81@hw.ac.uk,</span>
+            <span class="author-block">C.Zito@hw.ac.uk</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="./R2PO.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/HWUDLabAIRoboticsResearch/R2PO"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+          <div class="is-size-6" style="color: #888;">
+            Submitted to the 40th Conference on Neural Information Processing Systems (NeurIPS 2026)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-cartpole" style="font-size: 1rem;">
+          <img src="./static/gifs/cartpole%201.gif" alt="CartPole-v1">
+          <p class="has-text-centered" style="padding: 0.5rem; font-size: 0.9rem;">CartPole-v1</p>
+        </div>
+        <div class="item item-pong" style="font-size: 1rem;">
+          <img src="./static/gifs/pong.gif" alt="Pong">
+          <p class="has-text-centered" style="padding: 0.5rem; font-size: 0.9rem;">Pong</p>
+        </div>
+        <div class="item item-swimmer" style="font-size: 1rem;">
+          <img src="./static/gifs/swimmer.gif" alt="Swimmer-v5">
+          <p class="has-text-centered" style="padding: 0.5rem; font-size: 0.9rem;">Swimmer-v5</p>
+        </div>
+        <div class="item item-invertedpendulum" style="font-size: 1rem;">
+          <img src="./static/gifs/invertedpendulum.gif" alt="InvertedPendulum-v5">
+          <p class="has-text-centered" style="padding: 0.5rem; font-size: 0.9rem;">InvertedPendulum-v5</p>
+        </div>
+        <div class="item item-inverteddoublependulum" style="font-size: 1rem;">
+          <img src="./static/gifs/inverteddoublependulum.gif" alt="InvertedDoublePendulum-v5">
+          <p class="has-text-centered" style="padding: 0.5rem; font-size: 0.9rem;">InvertedDoublePendulum-v5</p>
+        </div>
+        <div class="item item-mountaincar" style="font-size: 1rem;">
+          <img src="./static/gifs/mountaincar.gif" alt="MountainCar-v0">
+          <p class="has-text-centered" style="padding: 0.5rem; font-size: 0.9rem;">MountainCar-v0</p>
+        </div>
+        <div class="item item-mountaincarcontinuous" style="font-size: 1rem;">
+          <img src="./static/gifs/mountaincarcontinuous.gif" alt="MountainCarContinuous-v0">
+          <p class="has-text-centered" style="padding: 0.5rem; font-size: 0.9rem;">MountainCarContinuous-v0</p>
+        </div>
+        <div class="item item-frozenlake" style="font-size: 1rem;">
+          <img src="./static/gifs/frozenlake%201.gif" alt="FrozenLake-v1">
+          <p class="has-text-centered" style="padding: 0.5rem; font-size: 0.9rem;">FrozenLake-v1</p>
+        </div>
+        <div class="item item-hopper" style="font-size: 1rem;">
+          <img src="./static/gifs/hopper.gif" alt="Hopper">
+          <p class="has-text-centered" style="padding: 0.5rem; font-size: 0.9rem;">Hopper</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Existing LLM-based policy optimizers see only scalar rewards: that a policy scored 0.45,
+            but not whether the agent got stuck in a loop, fell into a hole on the third step, or
+            performed well on 19 out of 20 rollouts and failed catastrophically on one.
+          </p>
+          <p>
+            We propose <strong>Reflective Prompted Policy Optimization (R2PO)</strong>, a two-stage LLM
+            framework for policy search over compact policy classes that augments scalar reward feedback
+            with trajectory-level behavioral evidence. A <em>Search-LLM</em> acts as a global policy
+            optimizer and proposes candidate policy parameters; the environment executes them; a
+            <em>Critic-LLM</em> then inspects the resulting rollouts and proposes targeted parameter
+            revisions grounded in observed states, actions, and rewards.
+          </p>
+          <p>
+            Across ten environments, ablations show R2PO's gains arise from a design that explicitly
+            separates global search from behavior-grounded revision and uses selection to filter
+            high-variance edits. We further identify a dominant failure mode, <em>salience bias</em>:
+            when presented with multiple rollouts, the Critic-LLM fixates on improving a single failure
+            even when most trajectories succeed. In a three-trajectory variant, this behavior explains
+            76.6% of regressions on CartPole. R2PO mitigates this by reasoning over aggregate rollout
+            statistics, median-trajectory selection, and a revision rule.
+          </p>
+          <p>
+            Using a relatively small open-weight 20B-parameter model, R2PO achieves the highest mean
+            best reward across all ten environments, while reaching near-optimal performance
+            substantially earlier in training (e.g., near-maximum CartPole reward within ~500 episodes),
+            and training far more stably than both deep RL and prior LLM-based methods.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Method. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">The R2PO Framework</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            R2PO uses two LLMs in distinct roles. The <strong>Search-LLM</strong> is the
+            <em>global policy optimizer</em>: given the history of previously evaluated policies and
+            their scalar mean rewards, it proposes where to move next in the parameter space.
+            The <strong>Critic-LLM</strong> is the <em>trajectory-based reviser</em>: given a
+            calibrated summary of the behavior observed when the Search-LLM's proposal was executed,
+            it inspects what went wrong and proposes a targeted revision. Both roles use the same
+            underlying 20B model, via two independent calls with distinct prompts tailored to their
+            respective roles.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column">
+            <div class="content">
+              <h3 class="title is-4">Stage 1: Search-LLM Proposal</h3>
+              <p>
+                At each iteration the Search-LLM is prompted with the optimization task and a
+                reward-only replay history of previously evaluated parameters and their mean returns.
+                It proposes an initial parameter vector, which the environment evaluates over
+                <em>K</em> independent rollouts, returning the mean reward and a set of recorded
+                trajectories.
+              </p>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="content">
+              <h3 class="title is-4">Stage 2: Critic-LLM Reflection</h3>
+              <p>
+                The Critic-LLM receives a calibrated trajectory evidence package consisting of
+                (i) the <strong>median trajectory</strong> reflecting typical policy behavior,
+                (ii) <strong>aggregate rollout statistics</strong> (reward mean/min/max, episode
+                length, success and failure rates), and (iii) a <strong>revision rule</strong>
+                that preserves policies already performing well. It proposes a revised parameter
+                vector, which is re-evaluated and kept only if it achieves higher reward.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Salience Bias. -->
+        <h3 class="title is-4">Salience Bias</h3>
+        <div class="content has-text-justified">
+          <p>
+            When shown multiple rollouts of a policy, the Critic-LLM <em>systematically
+            overweights the worst trajectory</em> in its diagnosis and edits, even when most
+            rollouts indicate good performance. We call this <strong>salience bias</strong>.
+            On CartPole, 233 of 304 regressions (76.6%) in a three-trajectory setting meet the
+            strict definition of a salience-problem regression. R2PO's evidence design —
+            communicating failure frequency numerically via aggregate statistics rather than
+            foregrounding a worst-case trace — mitigates this vulnerability while preserving the
+            benefits of trajectory-grounded diagnosis.
+          </p>
+        </div>
+        <!--/ Salience Bias. -->
+
+      </div>
+    </div>
+    <!--/ Method. -->
+
+
+    <!-- Results. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            R2PO is evaluated on ten environments spanning discrete and continuous action spaces,
+            as well as stochastic and deterministic dynamics: CartPole-v1, FrozenLake-v1,
+            MountainCar-v0, MountainCarContinuous-v0, InvertedPendulum-v5,
+            InvertedDoublePendulum-v5, Swimmer-v5, Maze, Nim, and Pong. All methods receive a
+            matched budget of 200 LLM calls and 4,000 episodes per run, averaged over 10 independent
+            runs. <strong>Best</strong> per environment is highlighted.
+          </p>
+        </div>
+
+        <!-- Table 1 -->
+        <div class="results-table-wrapper">
+          <p class="results-table-title">Table 1 — Mean Reward (± std) averaged across all training iterations</p>
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Environment</th>
+                <th>ProPS</th>
+                <th>ProPS+</th>
+                <th>Best SB3</th>
+                <th>R2PO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nim</td>
+                <td>−0.59 ± 0.21</td>
+                <td>−0.25 ± 0.07</td>
+                <td>0.01 ± 0.32 <small>(A2C)</small></td>
+                <td class="best">0.61 ± 0.03</td>
+              </tr>
+              <tr>
+                <td>Pong</td>
+                <td>0.74 ± 0.63</td>
+                <td>1.22 ± 0.58</td>
+                <td>1.02 ± 0.74 <small>(PPO)</small></td>
+                <td class="best">2.51 ± 0.21</td>
+              </tr>
+              <tr>
+                <td>Swimmer</td>
+                <td>89.22 ± 48.68</td>
+                <td>162.05 ± 66.07</td>
+                <td>44.60 ± 7.30 <small>(TRPO)</small></td>
+                <td class="best">260.35 ± 36.05</td>
+              </tr>
+              <tr>
+                <td>MountainCarContinuous</td>
+                <td>−23.45 ± 41.65</td>
+                <td>17.90 ± 37.48</td>
+                <td class="best">82.33 ± 2.57 <small>(SAC)</small></td>
+                <td>81.61 ± 5.18</td>
+              </tr>
+              <tr>
+                <td>MountainCar</td>
+                <td>−199.31 ± 2.18</td>
+                <td>−195.81 ± 3.73</td>
+                <td>−199.99 ± 0.02 <small>(DQN)</small></td>
+                <td class="best">−147.84 ± 7.11</td>
+              </tr>
+              <tr>
+                <td>InvertedDoublePendulum</td>
+                <td>79.44 ± 16.50</td>
+                <td>86.71 ± 17.70</td>
+                <td>86.04 ± 0.33 <small>(TRPO)</small></td>
+                <td class="best">158.51 ± 68.41</td>
+              </tr>
+              <tr>
+                <td>InvertedPendulum</td>
+                <td>234.14 ± 169.76</td>
+                <td>309.52 ± 247.92</td>
+                <td>24.35 ± 0.13 <small>(TRPO)</small></td>
+                <td class="best">756.08 ± 154.50</td>
+              </tr>
+              <tr>
+                <td>FrozenLake</td>
+                <td>0.05 ± 0.05</td>
+                <td>0.37 ± 0.06</td>
+                <td>0.02 ± 0.02 <small>(TRPO)</small></td>
+                <td class="best">0.62 ± 0.07</td>
+              </tr>
+              <tr>
+                <td>CartPole</td>
+                <td>258.09 ± 138.58</td>
+                <td>253.06 ± 133.35</td>
+                <td>216.92 ± 63.34 <small>(TRPO)</small></td>
+                <td class="best">474.67 ± 16.90</td>
+              </tr>
+              <tr>
+                <td>Maze</td>
+                <td>−1.03 ± 0.18</td>
+                <td>0.76 ± 0.05</td>
+                <td>0.83 ± 0.13 <small>(A2C)</small></td>
+                <td class="best">0.83 ± 0.06</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table 2 -->
+        <div class="results-table-wrapper">
+          <p class="results-table-title">Table 2 — Mean Best Reward (± std) — peak performance across all training iterations</p>
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Environment</th>
+                <th>ProPS</th>
+                <th>ProPS+</th>
+                <th>Best SB3</th>
+                <th>R2PO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nim</td>
+                <td>0.75 ± 0.30</td>
+                <td>1.00 ± 0.00</td>
+                <td>0.88 ± 0.27 <small>(A2C)</small></td>
+                <td class="best">1.00 ± 0.00</td>
+              </tr>
+              <tr>
+                <td>Pong</td>
+                <td>2.15 ± 0.95</td>
+                <td>2.78 ± 0.41</td>
+                <td>2.33 ± 0.78 <small>(PPO)</small></td>
+                <td class="best">3.00 ± 0.00</td>
+              </tr>
+              <tr>
+                <td>Swimmer</td>
+                <td>208.52 ± 68.38</td>
+                <td>274.86 ± 38.81</td>
+                <td>67.89 ± 20.92 <small>(TRPO)</small></td>
+                <td class="best">294.57 ± 43.79</td>
+              </tr>
+              <tr>
+                <td>MountainCarContinuous</td>
+                <td>75.37 ± 30.57</td>
+                <td>98.70 ± 0.50</td>
+                <td>94.81 ± 0.42 <small>(SAC)</small></td>
+                <td class="best">98.75 ± 0.44</td>
+              </tr>
+              <tr>
+                <td>MountainCar</td>
+                <td>−191.84 ± 25.80</td>
+                <td>−150.21 ± 26.62</td>
+                <td>−197.47 ± 3.66 <small>(DQN)</small></td>
+                <td class="best">−111.04 ± 3.92</td>
+              </tr>
+              <tr>
+                <td>InvertedDoublePendulum</td>
+                <td>112.18 ± 20.94</td>
+                <td>128.81 ± 54.51</td>
+                <td>98.25 ± 2.56 <small>(TRPO)</small></td>
+                <td class="best">254.04 ± 232.39</td>
+              </tr>
+              <tr>
+                <td>InvertedPendulum</td>
+                <td>649.91 ± 432.17</td>
+                <td>657.88 ± 444.42</td>
+                <td>28.49 ± 0.71 <small>(TRPO)</small></td>
+                <td class="best">1000.00 ± 0.00</td>
+              </tr>
+              <tr>
+                <td>FrozenLake</td>
+                <td>0.24 ± 0.14</td>
+                <td>0.90 ± 0.04</td>
+                <td>0.12 ± 0.02 <small>(TRPO)</small></td>
+                <td class="best">0.93 ± 0.05</td>
+              </tr>
+              <tr>
+                <td>CartPole</td>
+                <td>427.74 ± 143.04</td>
+                <td>396.21 ± 155.21</td>
+                <td>490.76 ± 29.22 <small>(TRPO)</small></td>
+                <td class="best">500.00 ± 0.00</td>
+              </tr>
+              <tr>
+                <td>Maze</td>
+                <td>−0.70 ± 0.88</td>
+                <td>0.97 ± 0.00</td>
+                <td>0.97 ± 0.00 <small>(A2C)</small></td>
+                <td class="best">0.97 ± 0.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+    <!--/ Results. -->
+
+
+    <!-- Contributions. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Contributions</h2>
+        <div class="content">
+          <ul>
+            <li>
+              <strong>R2PO</strong>, a two-stage LLM policy-optimization framework that combines
+              scalar reward search with trajectory-grounded behavioral diagnosis, treating rollouts
+              as first-class in-context evidence.
+            </li>
+            <li>
+              A <strong>systematic ablation</strong> across ten environments over search budget,
+              prompt design, two-stage architecture, selection, and trajectory evidence, showing
+              that R2PO's gains require the combination of trajectory-grounded revision, two-stage
+              design, and keep-best selection.
+            </li>
+            <li>
+              A <strong>mechanistic analysis</strong> identifying and quantifying salience bias —
+              a dominant failure mode in which the Critic-LLM overweights vivid worst-case rollouts
+              when multiple trajectories are available, accounting for 76.6% of regressions on
+              CartPole in a three-trajectory setting.
+            </li>
+            <li>
+              <strong>Empirical validation</strong> using a 20B open-weight LLM: R2PO achieves
+              the highest mean reward on 9 of 10 environments, matches or exceeds all baselines
+              on mean best reward, reaches near-optimal performance substantially earlier in
+              training, and trains more stably than both deep RL and prior LLM-based baselines.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Contributions. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{abuhara2026r2po,
+  author    = {Abu Hara, Rahaf and Murarri, Vaibbhav and Zito, Claudio},
+  title     = {Reflective Prompted Policy Optimization: Trajectory-Grounded Revision and Salience Bias},
+  journal   = {NeurIPS},
+  year      = {2026},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This work was supported by the Lab for AI and Robotics Research (LAIRR) at Heriot Watt University, Dubai.
+      </p>
+      <p>
+        Website template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
