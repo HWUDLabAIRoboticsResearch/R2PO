@@ -463,6 +463,140 @@
     <!--/ Results. -->
 
 
+    <!-- Qualitative Examples. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Qualitative Examples</h2>
+        <div class="content has-text-justified">
+          <p>
+            Two representative R2PO revision episodes on CartPole. Example 1 shows a conservative
+            one-parameter edit guided by aggregate statistics; Example 2 shows why selection remains
+            essential — well-reasoned minimal edits can still fail. Changed parameters are <u>underlined</u>.
+          </p>
+        </div>
+
+        <div class="qual-card">
+          <div class="qual-card-header">
+            <span>Example 1: Conservative Repair (CartPole, R2PO)</span>
+            <span class="reward-delta">490.15 → 493.70 <span style="color:#90cdf4;">(+3.55)</span></span>
+          </div>
+          <div class="qual-card-body">
+            <p><strong>Stats:</strong> Mean 490.15, Min 436, Max 500, Success 19/20</p>
+            <p>
+              <code>Initial: &nbsp;[6.0, <u>5.5</u>, 6.0, 6.0, -1.0, 6.0, -0.5, 6.0, -2.0, -2.0]</code><br>
+              <code>Revised: [6.0, <u>6.0</u>, 6.0, 6.0, -1.0, 6.0, -0.5, 6.0, -2.0, -2.0]</code>
+            </p>
+            <p><strong>Critic-LLM:</strong> <em>"The average reward (490.15) and success rate (19/20) indicate the policy is already highly effective&hellip; I increased only params[1]."</em></p>
+            <div class="qual-card-footer">
+              <span><strong>Takeaway:</strong> Aggregate statistics guide a minimal one-parameter edit.</span>
+              <span class="qual-accepted">&#10003;&nbsp;Accepted</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="qual-card">
+          <div class="qual-card-header">
+            <span>Example 2: Honest Failure (CartPole, R2PO)</span>
+            <span class="reward-delta">436.05 → 173.30 <span style="color:#feb2b2;">(&minus;262.75)</span></span>
+          </div>
+          <div class="qual-card-body">
+            <p><strong>Stats:</strong> Mean 436.05, Success 15/20, sporadic failures</p>
+            <p>
+              <code>Initial: &nbsp;[6.0, 6.0, 6.0, 6.0, -1.0, 6.0, <u>-0.5</u>, 6.0, <u>-1.8</u>, -2.0]</code><br>
+              <code>Revised: [6.0, 6.0, 6.0, 6.0, -1.0, 6.0, <u>-0.3</u>, 6.0, <u>-1.5</u>, -2.0]</code>
+            </p>
+            <p><strong>Critic-LLM:</strong> <em>"The failures are sporadic; the median rollout is the same as with the current weights&hellip; The adjustments are small and target only the aspects linked to occasional failures."</em></p>
+            <div class="qual-card-footer">
+              <span><strong>Takeaway:</strong> Selection catches a minimal edit that destroys the policy.</span>
+              <span class="qual-rejected">&times;&nbsp;Original kept</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!--/ Qualitative Examples. -->
+
+
+    <!-- Learning Curves. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Learning Curves</h2>
+        <div class="content has-text-justified">
+          <p>
+            Mean reward (± standard deviation) over 10 independent runs across all ten environments.
+            R2PO reaches strong performance earlier and maintains it more consistently than baselines.
+          </p>
+        </div>
+
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/cartpole_reward_curve%201.png" alt="CartPole reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">CartPole-v1</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/swimmer_reward_curve%201.png" alt="Swimmer reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">Swimmer-v5</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/invertedpendulum_reward_curve%201.png" alt="InvertedPendulum reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">InvertedPendulum-v5</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/inverteddoublependulum_reward_curve%201.png" alt="InvertedDoublePendulum reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">InvertedDoublePendulum-v5</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/mountaincar_reward_curve%201.png" alt="MountainCar reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">MountainCar-v0</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/mountaincarcon_reward_curve%201.png" alt="MountainCarContinuous reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">MountainCarContinuous-v0</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/frozenlake_reward_curve%201.png" alt="FrozenLake reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">FrozenLake-v1</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/pong_reward_curve%201.png" alt="Pong reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">Pong</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/nim_reward_curve%201.png" alt="Nim reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">Nim</figcaption>
+            </figure>
+          </div>
+          <div class="column is-half">
+            <figure>
+              <img src="./static/images/graphs/maze_reward_curve%201.png" alt="Maze reward curve">
+              <figcaption class="has-text-centered" style="font-size: 0.85rem; color: #555; margin-top: 0.3rem;">Maze</figcaption>
+            </figure>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!--/ Learning Curves. -->
+
+
     <!-- Contributions. -->
     <div class="columns is-centered">
       <div class="column is-full-width">
