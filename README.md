@@ -13,7 +13,7 @@ Code for running Reflective Prompted Policy Optimization (R2PO), baseline policy
 
 ## Paper
 
-Reflective Prompted Policy Optimization: Trajectory-Grounded Revision and Salience Bias. Paper link coming soon.
+[Reflective Prompted Policy Optimization: Trajectory-Grounded Revision and Salience Bias](http://arxiv.org/abs/2605.08315).
 
 ## Contributions
 
@@ -166,4 +166,14 @@ Experiment configs are grouped by environment under `configs/`. Common suffixes:
 
 ## Citation
 
-Citation coming soon.
+```bibtex
+@misc{hara2026reflectivepromptedpolicyoptimization,
+      title={Reflective Prompted Policy Optimization: Trajectory-Grounded Revision and Salience Bias},
+      author={Rahaf Abu Hara and Vaibbhav Murarri and Claudio Zito},
+      year={2026},
+      eprint={2605.08315},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2605.08315},
+}
+```
